@@ -41,6 +41,53 @@ marij_use_df =
   slice(-1)
 ```
 
+Star wars data
+```{r}
+swm_html = 
+  read_html("https://www.imdb.com/list/ls070150896/")
+```
 
+use selector gadget to get the html elements
+```{r}
+swm_title_vec =
+  swm_html |>
+  html_elements(".lister-item-header a") |>
+  html_text()
+
+swm_grossrev_vec = 
+  swm_html |>
+  html_elements(".text-small:nth-child(7) span:nth-child(5)") |>
+  html_text()
+
+swm_df = 
+  tibble(
+    title = swm_title_vec,
+    gross_rev = swm_grossrev_vec
+  )
+```
+
+Using API...(use the link from API endpoint)
+```{r}
+nyc_water_df = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") |> 
+  content("parsed")
+```
+  
+BRFSS - request the limit of rows, parse data, etc.
+```{r}
+brfss_smart2010 = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) |> 
+  content("parsed")
+```
+
+Pokemon?
+```{r}
+poke = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") |>
+  content()
+
+poke$name
+```
 
 
