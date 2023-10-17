@@ -9,3 +9,88 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Strings and regular expressions!
+```{r}
+library(rvest)
+library(p8105.datasets)
+library(tidyverse)
+```
+
+```{r}
+string_vec = c("my", "name", "is", "jeff")
+
+str_detect(string_vec, "e") #in 'name' and 'jeff'
+str_detect(string_vec, "Jeff") #not there bc of case
+str_detect(string_vec, "jeff")
+
+str_replace(string_vec, "jeff", "Jeff")
+```
+
+```{r}
+string_vec = c(
+  "i think we all rule for participating",
+  "i think i have been caught",
+  "i think this will be quite fun actually",
+  "it will be fun, i think"
+  )
+
+str_detect(string_vec, "^i think")
+# can differentiate between at the beginning vs at the end. ^ is beginning
+
+str_detect(string_vec, "i think$")
+# $ at the end
+```
+
+```{r}
+string_vec = c(
+  "Time for a Pumpkin Spice Latte!",
+  "went to the #pumpkinpatch last weekend",
+  "Pumpkin Pie is obviously the best pie",
+  "SMASHING PUMPKINS -- LIVE IN CONCERT!!"
+  )
+
+str_detect(string_vec,"[Pp]umpkin")
+# everything in brackets can be matched
+```
+
+```{r}
+string_vec = c(
+  '7th inning stretch',
+  '1st half soon to begin. Texas won the toss.',
+  'she is 5 feet 4 inches tall',
+  '3AM - cant sleep :('
+  )
+
+str_detect(string_vec, "^[0-9][a-z]")
+# at the beginning, want to look for a number followed by lowercase letter. spaces count as a character!!
+```
+
+```{r}
+string_vec = c(
+  'Its 7:11 in the evening',
+  'want to go to 7-11?',
+  'my flight is AA711',
+  'NetBios: scanning ip 203.167.114.66'
+  )
+
+str_detect(string_vec, "7.11")
+# the . (period) stands for ANY character
+```
+
+what if you want to detect special characters? you have to designate it with a backslash... which is also a special character
+```{r}
+string_vec = c(
+  'The CI is [2, 5]',
+  ':-]',
+  ':-[',
+  'I found the answer on pages [6-7]'
+  )
+
+str_detect(string_vec, "\\[")
+# first backslash for detecting the second backslash for detecting the square bracket
+```
+
+dont use special characters in data bc it makes regular expressions difficult
+
+
+
